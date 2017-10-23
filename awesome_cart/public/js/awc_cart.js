@@ -145,7 +145,7 @@ awc_checkout = {
 							args: { "address_name": $addr.closest('div').attr('data-name') }
 						});
 						$addr.closest('.address-item').remove();
-						$shipping_container.find(".awc-addresses-container div.addr[data-name=" + $(this).closest("div").attr("data-name") + "]").parent().remove();
+						$billing_container.find(".awc-addresses-container div.addr[data-name=" + $addr.attr("data-name") + "]").parent().remove();
 					},
 
 					on_edit_click: function($addr, e) {
@@ -194,7 +194,7 @@ awc_checkout = {
 							args: { "address_name": $addr.closest('div').attr('data-name') }
 						});
 						$addr.closest('.address-item').remove();
-						$billing_container.find(".awc-addresses-container div.addr[data-name=" + $(this).closest("div").attr("data-name") + "]").parent().remove();
+						$shipping_container.find(".awc-addresses-container div.addr[data-name=" + $addr.attr("data-name") + "]").parent().remove();
 					},
 
 					on_edit_click: function($addr, e) {
@@ -269,41 +269,6 @@ awc_checkout = {
 					.change(function() {
 						awc_checkout.validate();
 					})
-
-				// map breadcrumb clicks ---------------------------------------
-				$('#bc-shipping').click(function(e) {
-					if ($('#checkout-shipping').attr('data-select') == "true") {
-						e.preventDefault();
-						awc_checkout.showPage('#checkout-shipping');
-					} else {
-						e.preventDefault();
-						awc_checkout.showPage('#checkout-shipping-address');
-					}
-				});
-
-				$('#bc-billing').click(function(e) {
-					if ($('#form-bill-addr').attr('data-select') == 'true') {
-						e.preventDefault();
-						awc_checkout.showPage('#checkout-billing');
-						$('#select-bill-addr').css('display', 'none');
-						$('#form-bill-addr').css('display', 'block');
-					} else {
-						e.preventDefault();
-						awc_checkout.showPage('#checkout-billing');
-						$('#form-bill-addr').css('display', 'none');
-						$('#select-bill-addr').css('display', 'block');
-					}
-				});
-
-				$('#bc-checkout').click(function(e) {
-					e.preventDefault();
-					awc_checkout.showPage('#checkout-confirmation');
-				});
-
-				$('#bc-shipping-method').click(function(e) {
-					e.preventDefault();
-					awc_checkout.showPage('#checkout-shipping-method');
-				});
 
 				$shipping_container.find(".btn-primary").click(function(e) {
 					$('#checkout-shipping-address .addr').removeClass('awc-selected');
@@ -446,9 +411,7 @@ awc_checkout = {
 								</div>\
 							</div>";
 						div.innerHTML = str;
-						if (!$('#awc-billing-addrs #same-as-ship-addr.addr.awc-selected')) {
-							$('#awc-billing-addrs #same-as-ship-addr.addr').parent().remove();
-						}
+						$('#awc-billing-addrs #same-as-ship-addr.addr').parent().remove();
 						$('#awc-billing-addrs div.row .awc-addresses-container').prepend(div);
 						$('#awc-billing-addrs #same-as-ship-addr.addr').click(function(e) {
 							e.stopPropagation();
